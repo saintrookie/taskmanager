@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS `task_manager` /*!40100 DEFAULT CHARACTER SET utf8
 USE `task_manager`;
 
 -- Dumping structure for table task_manager.task
-CREATE TABLE IF NOT EXISTS `task` (
+CREATE TABLE IF NOT EXISTS `tasks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin NOT NULL,
