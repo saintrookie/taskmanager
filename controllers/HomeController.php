@@ -4,9 +4,9 @@ require_once('BaseController.php');
 require_once('models/TaskModel.php');
 class HomeController extends BaseController {
 
-    
     //get task lisk
     public function index() {
+
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : null;
         $title = isset($_GET['title']) ? $_GET['title'] : null;
@@ -25,36 +25,41 @@ class HomeController extends BaseController {
             'total_pages' => $totalPages,
             'current_page' => $page,
         ];
-        // var_dump($data);
+
         // render view from views
         $this->renderView('views/index.php', $data, 'Task List');
+
     }
 
     //form create task
     public function createTask() {
+
         $this->renderView('views/task/create.php', NULL ,'Create Task');
+
     }
 
     //save task
     public function saveTask() {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
             $tasks = new TaskModel();
             $result = $tasks->saveTask();
-           
+            
             echo $result;
             
         }
+    
     }
 
     //update task
     public function updateTask() {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             $id = isset($_POST['id']) ? $_POST['id'] : null;
             $title = isset($_POST['title']) ? $_POST['title'] : null;
             $description = isset($_POST['description']) ? $_POST['description'] : null;
-
-            // var_dump($id, $title, $description);
             
             $tasks = new TaskModel();
             $result = $tasks->updateTask($id, $title, $description);
@@ -62,10 +67,13 @@ class HomeController extends BaseController {
             echo $result;
             
         }
+
     }
 
     //update status task
     public function updateStatusTask() {
+
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             $tasks = new TaskModel();
@@ -98,8 +106,6 @@ class HomeController extends BaseController {
         $delete = $tasks->deleteTaskById($id);
 
         echo $delete;
-
-
     }
 
 }

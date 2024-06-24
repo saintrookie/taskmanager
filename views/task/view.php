@@ -46,28 +46,33 @@
             var desc = $('#summernote').val();
             var id = $('#id').val();
 
-            console.log(title, desc, id);
-
             // request to update task
             $.ajax({
                 url: '<?php echo BASE_URL;?>/update', 
                 type: 'POST',
                 data: { title: title, description: desc, id: id },
                 success: function(response) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Update Task successfully!',
-                        showConfirmButton: false,
-                        timer: 1500  
-                    }).then(function() {
-                        // Redirect to task list
-                        window.location.href = '<?php echo BASE_URL;?>';
-                    });
+                    //check response
+                    if(response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Update Task successfully!',
+                            showConfirmButton: false,
+                            timer: 1500  
+                        }).then(function() {
+                            // Redirect to task list
+                            window.location.href = '<?php echo BASE_URL;?>';
+                        });
+                    } else {
+
+                        Swal.fire('Error updating task: ' + response.message);
+                    }
+                    
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
 
-                    Swal.fire('Error creating task: ' + textStatus);
+                    Swal.fire('Error updating task: ' + textStatus);
                 }
             });
 

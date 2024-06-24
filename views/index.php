@@ -120,16 +120,28 @@
                                 data: { id: id, status: status },
                                 success: function(response) {
 
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Success!',
-                                        text: 'Update successfully!',
-                                        showConfirmButton: false,
-                                        timer: 1500  
-                                    }).then(function() {
-                                        // Reload the page
-                                        window.location.reload();
-                                    });
+                                    if(response.status === 'success') {
+                                         Swal.fire({
+                                            icon: 'success',
+                                            title: 'Success!',
+                                            text: 'Update status task successfully!',
+                                            showConfirmButton: false,
+                                            timer: 1500  
+                                        }).then(function() {
+                                            // Reload the page
+                                            window.location.reload();
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Error!',
+                                            text: 'Something went wrong!',
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        });
+                                        return;
+                                    }
+                                   
                                 }
                             });
                         });
@@ -138,6 +150,7 @@
                         $('.deleteTask').on('click', function() {
                             var id = $(this).data('id');    
 
+                            // Confirm delete
                             Swal.fire({
                                 title: 'Are you sure?',
                                 text: "You won't be able to revert this!",
@@ -148,21 +161,35 @@
                                 confirmButtonText: 'Yes, delete it!'
                             }).then((result) => {
                                 if (result.isConfirmed) {
+                                    // AJAX request to delete task
                                     $.ajax({
                                         url: '<?php echo BASE_URL;?>/deleteTask',
                                         type: 'GET',
                                         data: { id: id },
                                         success: function(response) {
-                                            Swal.fire({
-                                                icon: 'success',
-                                                title: 'Success!',
-                                                text: 'Task deleted successfully!',
-                                                showConfirmButton: false,
-                                                timer: 1500
-                                            }).then(function() {
-                                                // Reload the page
-                                                window.location.reload();
-                                            });
+                                            // Check if task was deleted
+                                            if(response.status === 'success') {
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    title: 'Success!',
+                                                    text: 'Task deleted successfully!',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                }).then(function() {
+                                                    // Reload the page
+                                                    window.location.reload();
+                                                });
+                                            } else {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Error!',
+                                                    text: 'Something went wrong!',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                });
+                                                return;
+                                            }
+                                           
                                         }           
 
                                     });

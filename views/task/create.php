@@ -40,16 +40,6 @@
 
             var formData = new FormData(this);
 
-            if (!formData.get('title') ) {
-                Swal.fire('Title is invalid, show validation errors ');
-                return;
-            }
-
-            if (!formData.get('description')) {
-                Swal.fire('Description is invalid, show validation errors ');
-                return;
-            }
-
             // request to create task
             $.ajax({
                 url: '<?php echo BASE_URL;?>/save', 
@@ -58,16 +48,31 @@
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Task created successfully!',
-                        showConfirmButton: false,
-                        timer: 1500  
-                    }).then(function() {
-                        // Redirect to task list
-                        window.location.href = '<?php echo BASE_URL;?>';
-                    });
+                    console.log(response.status);
+
+                    if (response.status === 'error') {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error!',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500  
+                        });
+                        return;
+                    }
+
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Task created successfully!',
+                            showConfirmButton: false,
+                            timer: 1500  
+                        }).then(function() {
+                            // Redirect to task list
+                            window.location.href = '<?php echo BASE_URL;?>';
+                        });
+                    }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
 
