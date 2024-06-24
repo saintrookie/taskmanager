@@ -4,6 +4,7 @@ class BaseModel {
 
     protected $db;
 
+    //get database from config.php
     public function __construct() {
         $this->db = new Database();
     }

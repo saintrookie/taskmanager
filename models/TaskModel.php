@@ -4,6 +4,7 @@ require_once('BaseModel.php');
 class TaskModel extends BaseModel {
 
     public function getTask($page = 1, $limit = 10, $keyword = null, $title = null, $status = null) {
+
         $offset = ($page - 1) * $limit;
 
         $query = "SELECT * FROM tasks WHERE 1 = 1";
@@ -25,9 +26,11 @@ class TaskModel extends BaseModel {
         } else {
             return null;
         }
+
     }
 
     public function countTask($keyword = null, $title = null, $status = null) {
+
         $query = "SELECT COUNT(*) as total FROM tasks WHERE 1 = 1";
     
         if ($title) {
@@ -44,6 +47,7 @@ class TaskModel extends BaseModel {
         $row = $this->fetch($result);
     
         return $row['total'];
+
     }
     
  
@@ -92,7 +96,7 @@ class TaskModel extends BaseModel {
         if ($result) {
             echo json_encode(array('status' => 'success'));
         } else {
-            echo json_encode(array('status' => 'error', 'message' => 'Failed to update task'));
+            echo json_encode(array('status' => 'error', 'message' => 'Failed to update status task'));
         }
     }
 
@@ -117,7 +121,7 @@ class TaskModel extends BaseModel {
     public function getTaskById($id){
 
         $query = "SELECT * FROM tasks WHERE id = $id";
-        
+
         //function from baseModel.php
         $result = $this->query($query);
         

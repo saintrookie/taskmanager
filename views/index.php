@@ -82,7 +82,7 @@
                                             <?php } else if($task['status'] === 'In Progress') { ?>
                                                 <div data-id="<?php echo $task['id']; ?>" data-status="Completed" class="btn btn-success btn-sm text-white updateStatus">Completed</div>
                                             <?php } else {} ?>
-                                            <a href="/taskmanager/index.php/view?id=<?php echo $task['id']; ?>" class="btn btn-success btn-sm">View</a>
+                                            <a href="<?php echo BASE_URL; ?>/view?id=<?php echo $task['id']; ?>" class="btn btn-success btn-sm">View</a>
                                             <div data-id="<?php echo $task['id']; ?>" class="btn btn-danger btn-sm text-white deleteTask">Remove</div>
                                         </div>
                                     </div>
